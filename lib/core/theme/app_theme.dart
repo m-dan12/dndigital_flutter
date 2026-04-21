@@ -1,34 +1,14 @@
+import 'package:dndigital/core/theme/app_text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 final ThemeData dnTheme = ThemeData(
   useMaterial3: true,
   scaffoldBackgroundColor: Colors.white,
   canvasColor: Colors.white, // важно для Quill и попапов
   cardColor: Colors.white,
-  fontFamily: 'Cormorant',
-  textTheme: const TextTheme(
-    bodyLarge: TextStyle(
-      fontFamily: 'Cormorant',
-      fontSize: 20.0,
-    ), // основной крупный текст
-    bodyMedium: TextStyle(
-      fontFamily: 'Cormorant',
-      fontSize: 18.0,
-    ), // как ты просил
-    bodySmall: TextStyle(fontFamily: 'Cormorant', fontSize: 16.0),
-
-    titleLarge: TextStyle(fontFamily: 'Cormorant', fontSize: 24.0),
-    titleMedium: TextStyle(fontFamily: 'Cormorant', fontSize: 22.0),
-    titleSmall: TextStyle(fontFamily: 'Cormorant', fontSize: 20.0),
-
-    headlineLarge: TextStyle(fontFamily: 'Cormorant', fontSize: 28.0),
-    headlineMedium: TextStyle(fontFamily: 'Cormorant', fontSize: 26.0),
-    headlineSmall: TextStyle(fontFamily: 'Cormorant', fontSize: 22.0),
-
-    labelLarge: TextStyle(fontFamily: 'Cormorant', fontSize: 20.0),
-    labelMedium: TextStyle(fontFamily: 'Cormorant', fontSize: 18.0),
-    labelSmall: TextStyle(fontFamily: 'Cormorant', fontSize: 16.0),
-  ),
+  fontFamily: GoogleFonts.lora().fontFamily,
+  textTheme: appTextTheme,
   colorScheme: ColorScheme.fromSeed(
     seedColor: Colors.black,
     brightness: Brightness.light,

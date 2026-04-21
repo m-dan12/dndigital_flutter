@@ -1,10 +1,10 @@
-import 'package:dndigital/providers/resizable_controller_model.dart';
+import 'package:dndigital/core/utils/resizable_controller_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'windows_settings.dart';
-import 'themes/theme.dart';
-import 'views/title_bar.dart';
-import 'views/main_view.dart';
+import 'core/theme/app_theme.dart';
+import 'core/views/title_bar.dart';
+import 'core/views/main_view.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
