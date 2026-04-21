@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_resizable_container/flutter_resizable_container.dart';
 
-class ResizableControllerModel extends ChangeNotifier {
+class ResizableControllerViewModel extends ChangeNotifier {
   final ResizableController controller = ResizableController();
 
   bool _leftHovered = false;

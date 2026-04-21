@@ -1,4 +1,6 @@
-import 'package:dndigital/widgets/color_picker.dart';
+import 'package:dndigital/features/master_notes/presentation/widgets/toolbar/header_button.dart';
+import 'package:dndigital/features/master_notes/presentation/widgets/toolbar/list_button.dart';
+import 'package:dndigital/features/master_notes/presentation/widgets/toolbar/color_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
@@ -39,27 +41,27 @@ class NoteToolbar extends StatelessWidget {
             // Ссылка
             _buildLinkButton(context),
             // Заголовки (H)
-            _buildHeaderButton(context),
+            // _buildHeaderButton(context),
+            QuillToolbarHeaderButton(controller: controller),
             // Списки
-            _buildToggleButton(Icons.format_list_bulleted, Attribute.ul),
-            _buildToggleButton(Icons.format_list_numbered, Attribute.ol),
-            _buildToggleButton(Icons.check_box, Attribute.checked),
-
-            const SizedBox(width: 16),
+            QuillToolbarListButton(controller: controller),
 
             // Цитата
-            _buildToggleButton(Icons.format_quote, Attribute.blockQuote),
+            _buildToggleButton(PhosphorIcons.quotes(), Attribute.blockQuote),
             // Цвет текста (яркие)
             ToolbarColorPicker(
-              currentColor:
-                  controller
-                      .getSelectionStyle()
-                      .attributes[Attribute.color.key]
-                      ?.value ??
-                  Colors.black,
+              currentColor: _getColorFromAttribute(
+                controller
+                    .getSelectionStyle()
+                    .attributes[Attribute.color.key]
+                    ?.value,
+                defaultColor: Colors.black,
+              ),
               onColorSelected: (color) {
                 if (color == Colors.transparent) {
-                  controller.formatSelection(Attribute.color); // убрать цвет
+                  controller.formatSelection(
+                    const ColorAttribute(null),
+                  ); // убрать цвет
                 } else {
                   final hex =
                       '#${color.toARGB32().toRadixString(16).padLeft(8, '0').substring(2)}';
@@ -68,19 +70,19 @@ class NoteToolbar extends StatelessWidget {
               },
               isBackground: false,
             ),
-
-            // Цвет фона (тусклые)
+            // Цвет фона (тусклые цвета)
             ToolbarColorPicker(
-              currentColor:
-                  controller
-                      .getSelectionStyle()
-                      .attributes[Attribute.background.key]
-                      ?.value ??
-                  Colors.transparent,
+              currentColor: _getColorFromAttribute(
+                controller
+                    .getSelectionStyle()
+                    .attributes[Attribute.background.key]
+                    ?.value,
+                defaultColor: Colors.transparent,
+              ),
               onColorSelected: (color) {
                 if (color == Colors.transparent) {
                   controller.formatSelection(
-                    Attribute.background,
+                    const BackgroundAttribute(null),
                   ); // убрать фон
                 } else {
                   final hex =
@@ -94,6 +96,29 @@ class NoteToolbar extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Color _getColorFromAttribute(dynamic value, {required Color defaultColor}) {
+    if (value is! String || value.isEmpty) {
+      return defaultColor;
+    }
+    try {
+      // value приходит как "#rrggbb" или "#rrggbbaa"
+      final hex = value.replaceFirst(
+        '#',
+        '0xFF',
+      ); // если без альфы — делаем непрозрачным
+      if (value.length == 7) {
+        // #rrggbb
+        return Color(int.parse(hex));
+      } else if (value.length == 9) {
+        // #rrggbbaa
+        return Color(int.parse('0x${value.substring(1)}'));
+      }
+      return defaultColor;
+    } catch (e) {
+      return defaultColor;
+    }
   }
 
   // Простая кнопка форматирования
@@ -119,58 +144,4 @@ class NoteToolbar extends StatelessWidget {
       ),
     );
   }
-
-  // Кнопка заголовков
-  Widget _buildHeaderButton(BuildContext context) {
-    return QuillToolbarCustomButton(
-      controller: controller,
-      options: QuillToolbarCustomButtonOptions(
-        icon: Icon(PhosphorIcons.textHOne(), size: 20),
-        tooltip: 'Заголовок',
-        onPressed: () => _showHeaderMenu(context),
-      ),
-    );
-  }
-
-  // Меню заголовков
-  void _showHeaderMenu(BuildContext context) {
-    final RenderBox button = context.findRenderObject() as RenderBox;
-    final Offset position = button.localToGlobal(Offset.zero);
-
-    showMenu<dynamic>(
-      context: context,
-      position: RelativeRect.fromLTRB(
-        position.dx,
-        position.dy + button.size.height + 6,
-        position.dx + 220,
-        position.dy + 300,
-      ),
-      items: [
-        PopupMenuItem(value: 'h1', child: const Text('Заголовок 1')),
-        PopupMenuItem(value: 'h2', child: const Text('Заголовок 2')),
-        PopupMenuItem(value: 'h3', child: const Text('Заголовок 3')),
-        const PopupMenuDivider(),
-        PopupMenuItem(value: 'normal', child: const Text('Обычный текст')),
-      ],
-    ).then((value) {
-      if (value == null) return;
-
-      switch (value) {
-        case 'h1':
-          controller.formatSelection(Attribute.h1);
-          break;
-        case 'h2':
-          controller.formatSelection(Attribute.h2);
-          break;
-        case 'h3':
-          controller.formatSelection(Attribute.h3);
-          break;
-        case 'normal':
-          controller.formatSelection(Attribute.header);
-          break;
-      }
-    });
-  }
-
-  // Полноценный color picker
 }

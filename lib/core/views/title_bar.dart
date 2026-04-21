@@ -1,13 +1,13 @@
 // title_bar.dart
-import 'package:dndigital/widgets/buttons.dart';
+import 'package:dndigital/core/widgets/window_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_resizable_container/flutter_resizable_container.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
-import '../providers/resizable_controller_model.dart';
-import '../themes/button_styles.dart';
+import '../../features/master_notes/presentation/viewmodel/resizable_controller_view_model.dart';
+import '../theme/button_styles.dart';
 
 class TitleBar extends StatefulWidget {
   const TitleBar({super.key});
@@ -45,7 +45,7 @@ class _TitleBarState extends State<TitleBar> with WindowListener {
 
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<ResizableControllerModel>();
+    final model = context.watch<ResizableControllerViewModel>();
 
     return DragToMoveArea(
       child: Container(
@@ -87,28 +87,32 @@ class _TitleBarState extends State<TitleBar> with WindowListener {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const SizedBox(width: 8),
-                        DnIconButton(
+                        IconButton(
                           onPressed: () {},
                           icon: Icon(PhosphorIcons.sidebarSimple()),
-                          style: ButtonStyles.titleBarIcon,
+                          constraints: const BoxConstraints(),
+                          style: BtnStyle.titleBar,
                         ),
                         const SizedBox(width: 8),
-                        DnIconButton(
+                        IconButton(
                           onPressed: () {},
                           icon: Icon(PhosphorIcons.folder()),
-                          style: ButtonStyles.titleBarIcon,
+                          constraints: const BoxConstraints(),
+                          style: BtnStyle.titleBar,
                         ),
                         const SizedBox(width: 8),
-                        DnIconButton(
+                        IconButton(
                           onPressed: () {},
                           icon: Icon(PhosphorIcons.magnifyingGlass()),
-                          style: ButtonStyles.titleBarIcon,
+                          constraints: const BoxConstraints(),
+                          style: BtnStyle.titleBar,
                         ),
                         const SizedBox(width: 8),
-                        DnIconButton(
+                        IconButton(
                           onPressed: () {},
                           icon: Icon(PhosphorIcons.bookmarks()),
-                          style: ButtonStyles.titleBarIcon,
+                          constraints: const BoxConstraints(),
+                          style: BtnStyle.titleBar,
                         ),
                         const SizedBox(width: 8),
                       ],
@@ -124,41 +128,45 @@ class _TitleBarState extends State<TitleBar> with WindowListener {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         const SizedBox(width: 8),
-                        DnIconButton(
+                        IconButton(
                           onPressed: () {},
                           icon: Icon(PhosphorIcons.diceSix()),
-                          style: ButtonStyles.titleBarIcon,
+                          constraints: const BoxConstraints(),
+                          style: BtnStyle.titleBar,
                         ),
                         const SizedBox(width: 8),
-                        DnIconButton(
+                        IconButton(
                           onPressed: () {},
                           icon: Icon(PhosphorIcons.sword()),
-                          style: ButtonStyles.titleBarIcon,
+                          constraints: const BoxConstraints(),
+                          style: BtnStyle.titleBar,
                         ),
                         const SizedBox(width: 8),
-                        DnIconButton(
+                        IconButton(
                           onPressed: () {},
                           icon: Icon(PhosphorIcons.magicWand()),
-                          style: ButtonStyles.titleBarIcon,
+                          constraints: const BoxConstraints(),
+                          style: BtnStyle.titleBar,
                         ),
                         const SizedBox(width: 8),
-                        DnIconButton(
+                        IconButton(
                           onPressed: () {},
                           icon: Icon(PhosphorIcons.sidebarSimple()),
-                          style: ButtonStyles.titleBarIcon,
+                          constraints: const BoxConstraints(),
+                          style: BtnStyle.titleBar,
                         ),
                         const SizedBox(width: 8),
-                        DnWindowButton(
+                        WindowButton(
                           onPressed: () => windowManager.minimize(),
                           icon: PhosphorIcons.minus(),
                         ),
-                        DnWindowButton(
+                        WindowButton(
                           onPressed: () => isMaximized
                               ? windowManager.restore()
                               : windowManager.maximize(),
                           icon: PhosphorIcons.cards(),
                         ),
-                        DnWindowButton(
+                        WindowButton(
                           onPressed: () => windowManager.close(),
                           icon: PhosphorIcons.x(),
                           isClose: true,
