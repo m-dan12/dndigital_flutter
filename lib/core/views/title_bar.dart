@@ -6,7 +6,11 @@ import 'package:flutter_resizable_container/flutter_resizable_container.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
+<<<<<<< HEAD
 import '../utils/providers/layout_controller_provider.dart';
+=======
+import '../../features/master_notes/presentation/viewmodel/resizable_controller_view_model.dart';
+>>>>>>> origin/main
 import '../theme/button_styles.dart';
 
 class TitleBar extends StatefulWidget {
@@ -45,7 +49,11 @@ class _TitleBarState extends State<TitleBar> with WindowListener {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     final model = context.watch<LayoutControllerProvider>();
+=======
+    final model = context.watch<ResizableControllerViewModel>();
+>>>>>>> origin/main
 
     return DragToMoveArea(
       child: Container(
@@ -82,6 +90,7 @@ class _TitleBarState extends State<TitleBar> with WindowListener {
                   ResizableChild(
                     size: const ResizableSize.pixels(334, min: 184),
                     divider: model.leftDivider,
+<<<<<<< HEAD
                     child: ClipRect(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -118,6 +127,42 @@ class _TitleBarState extends State<TitleBar> with WindowListener {
                           const SizedBox(width: 8),
                         ],
                       ),
+=======
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        const SizedBox(width: 8),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(PhosphorIcons.sidebarSimple()),
+                          constraints: const BoxConstraints(),
+                          style: BtnStyle.titleBar,
+                        ),
+                        const SizedBox(width: 8),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(PhosphorIcons.folder()),
+                          constraints: const BoxConstraints(),
+                          style: BtnStyle.titleBar,
+                        ),
+                        const SizedBox(width: 8),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(PhosphorIcons.magnifyingGlass()),
+                          constraints: const BoxConstraints(),
+                          style: BtnStyle.titleBar,
+                        ),
+                        const SizedBox(width: 8),
+                        IconButton(
+                          onPressed: () {},
+                          icon: Icon(PhosphorIcons.bookmarks()),
+                          constraints: const BoxConstraints(),
+                          style: BtnStyle.titleBar,
+                        ),
+                        const SizedBox(width: 8),
+                      ],
+>>>>>>> origin/main
                     ),
                   ),
                   ResizableChild(

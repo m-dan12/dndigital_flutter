@@ -1,7 +1,7 @@
-import 'package:dndigital/core/utils/providers/layout_controller_provider.dart';
+import 'package:dndigital/features/master_notes/presentation/viewmodel/resizable_controller_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'core/utils/providers/windows_settings.dart';
+import 'windows_settings.dart';
 import 'core/theme/app_theme.dart';
 import 'core/views/title_bar.dart';
 import 'core/views/main_view.dart';
@@ -34,12 +34,8 @@ void main() async {
       supportedLocales: const [Locale('ru'), Locale('en')],
 
       home: Scaffold(
-        body: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (_) => LayoutControllerProvider()),
-            NoteEditorProvider.create(),
-            NoteEditorProvider.createListViewModel(),
-          ],
+        body: ChangeNotifierProvider(
+          create: (_) => ResizableControllerViewModel(),
           child: Column(
             children: [
               const TitleBar(),
