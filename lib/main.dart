@@ -7,8 +7,17 @@ import 'core/views/title_bar.dart';
 import 'core/views/main_view.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'features/master_notes/data/services/hive_initializer.dart';
+import 'features/master_notes/presentation/providers/note_editor_provider.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Инициализируем Hive
+  await Hive.initFlutter();
+  await HiveInitializer.initialize();
+
   windowsSettings();
   runApp(
     MaterialApp(
