@@ -6,7 +6,7 @@ import 'package:flutter_resizable_container/flutter_resizable_container.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:window_manager/window_manager.dart';
-import '../../features/master_notes/presentation/viewmodel/resizable_controller_view_model.dart';
+import '../utils/providers/layout_controller_provider.dart';
 import '../theme/button_styles.dart';
 
 class TitleBar extends StatefulWidget {
@@ -45,7 +45,7 @@ class _TitleBarState extends State<TitleBar> with WindowListener {
 
   @override
   Widget build(BuildContext context) {
-    final model = context.watch<ResizableControllerViewModel>();
+    final model = context.watch<LayoutControllerProvider>();
 
     return DragToMoveArea(
       child: Container(
@@ -80,42 +80,44 @@ class _TitleBarState extends State<TitleBar> with WindowListener {
                 direction: Axis.horizontal,
                 children: [
                   ResizableChild(
-                    size: const ResizableSize.pixels(334),
+                    size: const ResizableSize.pixels(334, min: 184),
                     divider: model.leftDivider,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        const SizedBox(width: 8),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(PhosphorIcons.sidebarSimple()),
-                          constraints: const BoxConstraints(),
-                          style: BtnStyle.titleBar,
-                        ),
-                        const SizedBox(width: 8),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(PhosphorIcons.folder()),
-                          constraints: const BoxConstraints(),
-                          style: BtnStyle.titleBar,
-                        ),
-                        const SizedBox(width: 8),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(PhosphorIcons.magnifyingGlass()),
-                          constraints: const BoxConstraints(),
-                          style: BtnStyle.titleBar,
-                        ),
-                        const SizedBox(width: 8),
-                        IconButton(
-                          onPressed: () {},
-                          icon: Icon(PhosphorIcons.bookmarks()),
-                          constraints: const BoxConstraints(),
-                          style: BtnStyle.titleBar,
-                        ),
-                        const SizedBox(width: 8),
-                      ],
+                    child: ClipRect(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(width: 8),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(PhosphorIcons.sidebarSimple()),
+                            constraints: const BoxConstraints(),
+                            style: BtnStyle.titleBar,
+                          ),
+                          const SizedBox(width: 8),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(PhosphorIcons.folderSimple()),
+                            constraints: const BoxConstraints(),
+                            style: BtnStyle.titleBar,
+                          ),
+                          const SizedBox(width: 8),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(PhosphorIcons.magnifyingGlass()),
+                            constraints: const BoxConstraints(),
+                            style: BtnStyle.titleBar,
+                          ),
+                          const SizedBox(width: 8),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(PhosphorIcons.bookmarks()),
+                            constraints: const BoxConstraints(),
+                            style: BtnStyle.titleBar,
+                          ),
+                          const SizedBox(width: 8),
+                        ],
+                      ),
                     ),
                   ),
                   ResizableChild(
@@ -123,7 +125,7 @@ class _TitleBarState extends State<TitleBar> with WindowListener {
                     child: const SizedBox(),
                   ),
                   ResizableChild(
-                    size: const ResizableSize.pixels(334),
+                    size: const ResizableSize.pixels(334, min: 322),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
