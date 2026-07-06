@@ -1,17 +1,74 @@
-# dndigital
+# DnDigital
 
-A new Flutter project.
+Учебный/личный pet-проект — desktop-приложение на Flutter для ведущих (мастеров) настольных ролевых игр (D&D и др.), помогающее вести заметки к игровым сессиям.
 
-## Getting Started
+## О проекте
 
-This project is a starting point for a Flutter application.
+DnDigital — редактор заметок для NPC, локаций, сюжетных линий и прочих материалов кампании, с многопанельным интерфейсом в духе IDE: список заметок слева, rich-text редактор по центру, дополнительная панель справа. Приложение ориентировано в первую очередь на десктоп (кастомный title bar, управление окном).
 
-A few resources to get you started if this is your first Flutter project:
+### Основные возможности
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+- Многопанельный интерфейс с изменяемыми размерами (resizable panels)
+- Кастомный title bar и управление окном (свернуть/развернуть/закрыть)
+- Rich-text редактор заметок на базе Flutter Quill
+- Локальное хранилище заметок на Hive с автосохранением (дебаунс 2 сек после последнего изменения)
+- Индикатор статуса сохранения
+- Локализация интерфейса (RU/EN)
+- Кастомная тема оформления и иконки (Phosphor / FontAwesome)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Технологический стек
+
+- **Flutter / Dart** (SDK ^3.11.4)
+- **Provider** — управление состоянием
+- **Hive / Hive Flutter** — локальная база данных для хранения заметок
+- **Flutter Quill** — rich-text редактор
+- **flutter_resizable_container**, **docking**, **multi_split_view** — компоновка панелей
+- **window_manager** — управление окном на десктопе
+- **google_fonts**, **flutter_svg**, **font_awesome_flutter**, **phosphor_flutter** — оформление и иконки
+
+Целевые платформы: Windows, macOS, Linux, а также Android/iOS/Web (сгенерированы стандартные проекты Flutter, но приложение написано с прицелом на десктоп).
+
+## Архитектура
+
+Проект структурирован по фичам с разделением на слои (data / domain / presentation):
+```
+lib/
+├── core/                     — общая инфраструктура приложения
+│   ├── theme/                — тема, стили текста и кнопок
+│   ├── views/                — главный экран, title bar
+│   ├── widgets/              — переиспользуемые виджеты
+│   └── utils/providers/      — провайдеры (layout, настройки окна)
+│
+├── features/
+│   └── master_notes/         — фича «заметки мастера»
+│       ├── domain/           — сущности, интерфейсы репозиториев, use cases
+│       ├── data/             — модели Hive, мапперы, реализация репозитория
+│       └── presentation/     — view, viewmodel, providers, виджеты
+│
+└── main.dart                 — точка входа, инициализация Hive и провайдеров
+```
+Слой заметок (`master_notes`) реализован по принципам чистой архитектуры: `domain` не зависит от `data`/`presentation`, взаимодействие идёт через абстрактный `NoteRepository` и use cases (`SaveNoteUsecase`, `GetNoteUsecase`).
+
+## Запуск проекта
+
+Требуется установленный [Flutter SDK](https://docs.flutter.dev/get-started/install).
+
+```bash
+flutter pub get
+dart run build_runner build   # генерация Hive-адаптера (note_hive_model.g.dart)
+flutter run -d windows        # или -d macos / -d linux
+```
+
+## Статус проекта
+
+Проект в активной разработке, pet-проект для личного использования при подготовке к игровым сессиям. Часть UI-кнопок (навигация по разделам, настройки, тема) — пока заглушки без логики.
+
+### Планы по развитию (из внутреннего roadmap)
+- Облачная синхронизация заметок
+- История редактирования
+- Поиск по заметкам
+- Экспорт и удаление заметок
+
+## Лицензия
+
+Личный/учебный проект, свободный к использованию в образовательных целях.
